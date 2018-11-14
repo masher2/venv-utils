@@ -34,7 +34,7 @@ actenv () {
 createnv () {
     ENVDIR=~/.env_vars/
     DIR=${PWD##*/}
-    PY=python3.6
+    PY=python3
 
     virtualenv --python=${2-$PY} ~/.venvs/${1-$DIR}
 
