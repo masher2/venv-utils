@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Activate the virtual environment for the project of the current folder or an
+# arbitrary virtual environment if passed the first argument.
+
+$DIR=${PWD##*/}
+
+source ~/.venvs/${1-$DIR}/bin/activate

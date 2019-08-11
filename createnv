@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+
+ENVDIR=~/.env_vars/
+DIR=${PWD##*/}
+PY=python3
+
+create() {
+    virtualenv --python=$PY ~/.venvs/$DIR
+
+    if [ ! -d $ENVDIR/$DIR ]; then
+        mkdir $ENVDIR/$DIR
+        touch $ENVDIR/$DIR/onact
+        touch $ENVDIR/$DIR/onexit
+    fi
+}
+
+# Make the virtual environment source the project virtual environment on activate and unset them on deactivate
+setup () {
+    echo -e '\n# Source the project environment variables when the venv is activated'>> ~/.venvs/$DIR/bin/activate
+    echo 'source ~/.env_vars/'"$DIR"'/onact' >> ~/.venvs/$DIR/bin/activate
+    sed -i '
+        /deactivate ()/,/^}$/ {
+        /^}$/ i\
+    \n    # Unset the environment variables when deactivating the venv\
+    \source ~/.env_vars/'"$DIR"'/onexit
+    }
+    ' ~/.venvs/$DIR/bin/activate
+}
+
+post_setup() {
+    actenv $DIR
+
+    if [ $DIR == ${PWD##*/} ]; then
+        installreqs
+    fi
+}
+
+
+while getopts d:p: opt; do
+    case $opt in
+        d) DIR=$OPTARG ;;
+        p) PY=$OPTARG ;;
+        *) exit 1 ;;
+    esac
+done
+
+
+create
+setup
+post_setup
