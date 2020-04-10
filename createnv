@@ -14,7 +14,8 @@ create() {
     fi
 }
 
-# Make the virtual environment source the project virtual environment on activate and unset them on deactivate
+# Make the virtual environment source the project virtual environment on 
+# activate and unset them on deactivate
 setup () {
     echo -e '\n# Source the project environment variables when the venv is activated'>> ~/.venvs/$DIR/bin/activate
     echo 'source ~/.env_vars/'"$DIR"'/onact' >> ~/.venvs/$DIR/bin/activate
