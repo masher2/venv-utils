@@ -4,20 +4,22 @@ This is a single script that began as some aliases to ease pain working with vir
 
 # Installation
 
-Source the script inside your .bash_aliases or wherever you put your aliases in, then use the functions as you wish.
+Clone the repo, call `sudo make` or `sudo make install` and the commands should be copied to your path. Additionally you should create an alias for `actenv` wherever you this way: `alias actenv='source actenv'` to make it work as intended.
 
 # Contents
 
-The script contains the following functions:
+The commands included here are the following:
 
-* `installreqs`
-* `preparenv`
 * `actenv`
 * `createnv`
+* `installreqs`
+* `deletenv`
 
 # Workflow
 
-1. Use `createnv` inside your project folder to create a virtualenv inside the .venv folder on your `HOME` directory, this also will create onact and onexit files inside the ~/.env_vars folder (onact should contain declarations of project specific environment variables and onexit should unset them), then call `preparenv` to hook into the virtualenv activate script to source `onact` when activating the environment and `onexit` when deactivating. Call it with 1 argument to specify the name of the virtualenv, call it with another one to specify another python interpreter (defaults to 3.6 as of now).
-2. Use `actenv` to activate the virtualenv in ~/.venvs with the name of the project. Call it with another virtualenv name to activate that instead.
+1. Use `createnv` inside your project folder to create a virtualenv inside the .venv folder on your `HOME` directory, this also will create onact and onexit files inside the ~/.env_vars folder (onact should contain declarations of project specific environment variables and onexit should unset them). 
+  To select a custom python executable call it with the flag `-p`, it defaults to use `python3`. e.g. `createnv -p python36`,
+  To create a virtual environment with a custom name (not the name of the current folder) call it with the flag `-d`. e.g. `createnv -d somenvironment`.
+2. Use `actenv` to activate the virtualenv in `~/.venvs` with the name of the project. Passing it one argument will activate the virtual environment with that name instead.
 3. Use `installreqs` to install `requirements.txt` if any on the current folder. It will not detect if an environment is active, be aware of that.
-4. Use `preparenv` only if you didn't make the virtualenv to prepare with `createnv`, it currently isn't aware if it has been called before on a given virtualenv.
+4. If needed use `deletenv` to remove a virtual environment and its environment variables.
