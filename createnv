@@ -29,11 +29,7 @@ setup () {
 }
 
 post_setup() {
-    actenv $DIR
-
-    if [ $DIR == ${PWD##*/} ]; then
-        installreqs
-    fi
+    actenv $DIR && [ $DIR == ${PWD##*/} ] && installreqs
 }
 
 
@@ -46,6 +42,4 @@ while getopts d:p: opt; do
 done
 
 
-create
-setup
-post_setup
+create && setup && post_setup
