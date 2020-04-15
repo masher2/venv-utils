@@ -1,15 +1,15 @@
-#!/usr/bin/env bash
+#!/usr/bin/sh
 
-VIRTUALENV_DIR=~/.venvs/
-ENV_VARS_DIR=~/.env_vars/
+VENV_DIR=${VENV_DIR-$HOME/.venvs}
+VENV_ENVAR_DIR=${VENV_ENVAR_DIR-$HOME/.env_vars}
 DIR=${1:-${PWD##*/}}
 
-[ -d $VIRTUALENV_DIR$DIR ] \
+[ -d $VENV_DIR/$DIR ] \
     && echo "Deleting virtual environment $DIR" \
-    && rm -r $VIRTUALENV_DIR$DIR
+    && rm -r $VENV_DIR/$DIR
 
-[ -d $ENV_VARS_DIR$DIR ] \
+[ -d $VENV_ENVAR_DIR/$DIR ] \
     && echo "Deleting $DIR environment variables" \
-    && rm -r $ENV_VARS_DIR$DIR
+    && rm -r $VENV_ENVAR_DIR/$DIR
 
 

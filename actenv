@@ -2,6 +2,7 @@
 # Activate the virtual environment for the project of the current folder or an
 # arbitrary virtual environment if passed the first argument.
 
+VENV_DIR=${VENV_DIR-$HOME/.venvs}
 DIR=${PWD##*/}
 
-source ~/.venvs/${1-$DIR}/bin/activate
+source $VENV_DIR/${1-$DIR}/bin/activate

@@ -1,31 +1,31 @@
-#!/usr/bin/env bash
+#!/usr/bin/sh
 
-ENVDIR=~/.env_vars/
+VENV_DIR=${VENV_DIR-$HOME/.venvs}
+VENV_ENVAR_DIR=${VENV_ENVAR_DIR-$HOME/.env_vars}
 DIR=${PWD##*/}
 PY=python3
 
 create() {
-    virtualenv --python=$PY ~/.venvs/$DIR
+    virtualenv --python=$PY $VENV_DIR/$DIR
 
-    if [ ! -d $ENVDIR/$DIR ]; then
-        mkdir $ENVDIR/$DIR
-        touch $ENVDIR/$DIR/onact
-        touch $ENVDIR/$DIR/onexit
-    fi
+    mkdir -p $VENV_ENVAR_DIR/$DIR
+    touch $VENV_ENVAR_DIR/$DIR/onact
+    touch $VENV_ENVAR_DIR/$DIR/onexit
+
 }
 
 # Make the virtual environment source the project virtual environment on 
 # activate and unset them on deactivate
 setup () {
-    echo -e '\n# Source the project environment variables when the venv is activated'>> ~/.venvs/$DIR/bin/activate
-    echo 'source ~/.env_vars/'"$DIR"'/onact' >> ~/.venvs/$DIR/bin/activate
+    echo -e '\n# Source the project environment variables when the venv is activated'>> $VENV_DIR/$DIR/bin/activate
+    echo 'source '"$VENV_ENVAR_DIR/$DIR"'/onact' >> $VENV_DIR/$DIR/bin/activate
     sed -i '
         /deactivate ()/,/^}$/ {
         /^}$/ i\
     \n    # Unset the environment variables when deactivating the venv\
-    \source ~/.env_vars/'"$DIR"'/onexit
+    \source '"$VENV_ENVAR_DIR/$DIR"'/onexit
     }
-    ' ~/.venvs/$DIR/bin/activate
+    ' $VENV_DIR/$DIR/bin/activate
 }
 
 post_setup() {
