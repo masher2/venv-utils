@@ -1,4 +1,4 @@
-#!/usr/bin/sh
+#!/usr/bin/env sh
 # Install project requirements if the file exists
 
 [ -e $PWD/requirements.txt ] && pip install -r requirements.txt

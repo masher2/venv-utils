@@ -1,4 +1,4 @@
-#!/usr/bin/sh
+#!/usr/bin/env sh
 
 VENV_DIR=${VENV_DIR-$HOME/.venvs}
 VENV_ENVAR_DIR=${VENV_ENVAR_DIR-$HOME/.env_vars}
@@ -19,7 +19,7 @@ create() {
 setup () {
     echo -e '\n# Source the project environment variables when the venv is activated'>> $VENV_DIR/$DIR/bin/activate
     echo 'source '"$VENV_ENVAR_DIR/$DIR"'/onact' >> $VENV_DIR/$DIR/bin/activate
-    sed -i '
+    gsed -i '
         /deactivate ()/,/^}$/ {
         /^}$/ i\
     \n    # Unset the environment variables when deactivating the venv\
